@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: server/go.mod
+          cache-dependency-path: server/go.sum
+      - uses: actions/setup-node@v7
+        with:
+          node-version: lts/*
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+      # Hinode compiles its SCSS with Dart Sass, which Hugo expects on PATH.
+      - name: Install Dart Sass
+        env:
+          DART_SASS_VERSION: "1.98.0"
+        run: |
+          curl -fsSL "https://github.com/sass/dart-sass/releases/download/${DART_SASS_VERSION}/dart-sass-${DART_SASS_VERSION}-linux-x64.tar.gz" \
+            | tar -xz -C "$HOME"
+          echo "$HOME/dart-sass" >> "$GITHUB_PATH"
+      - name: Test the server
+        run: make test
+      - name: Build the site and the binary
+        run: make build
+      # The site lists Hinode's modules itself (see site/config/_default/
+      # hugo.toml). Fail when a module update makes that list stale.
+      - name: Check the module list against Hinode's
+        run: make check-imports

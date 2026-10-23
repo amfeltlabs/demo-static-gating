@@ -1,0 +1,88 @@
+title = "Gated Docs"
+copyright = "Copyright © 2026 Amfelt Labs B.V. MIT licensed."
+
+# The server answers on localhost:8080 by default. Change this when you deploy.
+baseURL = "http://localhost:8080/"
+enableRobotsTXT = true
+summaryLength = 20
+timeout = "180s"
+
+locale = "en-us"
+defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = false
+
+# Hugo writes straight into the folder the Go server embeds. See server/main.go.
+publishDir = "../server/dist"
+
+[build]
+  # Hinode's PurgeCSS step reads hugo_stats.json to decide which CSS to keep.
+  writeStats = true
+
+[taxonomies]
+  tag = "tags"
+
+[minify]
+  [minify.tdewolff.html]
+    keepWhitespace = true
+
+[module]
+  [module.hugoVersion]
+    extended = true
+    min = "0.158.0"
+  [[module.mounts]]
+    source = "archetypes"
+    target = "archetypes"
+  [[module.mounts]]
+    source = "assets"
+    target = "assets"
+  [[module.mounts]]
+    source = "content"
+    target = "content"
+  [[module.mounts]]
+    source = "data"
+    target = "data"
+  [[module.mounts]]
+    source = "i18n"
+    target = "i18n"
+  [[module.mounts]]
+    source = "layouts"
+    target = "layouts"
+  [[module.mounts]]
+    source = "static"
+    target = "static"
+  [[module.imports]]
+    path = "github.com/gethinode/mod-blocks/v2"
+  # Hinode imports its optional modules too, and their static files are copied
+  # into the output whether a page uses them or not. Everything in the output
+  # ends up in the binary, and Mermaid alone is about 42 MB. `disable = true`
+  # cannot switch off a module Hinode imports, so this ignores Hinode's imports
+  # and lists them here instead, minus mod-mermaid.
+  #
+  # The list mirrors Hinode v3.30.2. Check it when you upgrade Hinode: a module
+  # Hinode adds later will be missing until you add it here.
+  [[module.imports]]
+    path = "github.com/gethinode/hinode/v3"
+    ignoreImports = true
+  [[module.imports]]
+    path = "github.com/gethinode/mod-bootstrap"
+  [[module.imports]]
+    path = "github.com/gethinode/mod-csp"
+  [[module.imports]]
+    path = "github.com/gethinode/mod-flexsearch/v5"
+  [[module.imports]]
+    path = "github.com/gethinode/mod-fontawesome/v6"
+  [[module.imports]]
+    path = "github.com/gethinode/mod-google-analytics/v2"
+  [[module.imports]]
+    path = "github.com/gethinode/mod-katex"
+  [[module.imports]]
+    path = "github.com/gethinode/mod-leaflet/v3"
+  [[module.imports]]
+    path = "github.com/gethinode/mod-lottie/v3"
+  [[module.imports]]
+    path = "github.com/gethinode/mod-simple-datatables/v4"
+  [[module.imports]]
+    path = "github.com/gethinode/mod-utils/v6"
+  # Login page layout, Hanko Elements, and the session lifecycle events.
+  [[module.imports]]
+    path = "github.com/gethinode/mod-hanko/v3"

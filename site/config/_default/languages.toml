@@ -1,0 +1,6 @@
+[en]
+    label = "English"
+    contentDir = "content"
+    weight = 1
+    [en.params.head]
+        tagline = "A gated static site"

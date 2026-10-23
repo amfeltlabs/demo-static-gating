@@ -1,0 +1,34 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      github-actions:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+
+  - package-ecosystem: "gomod"
+    directory: "/server/"
+    schedule:
+      interval: "weekly"
+    groups:
+      gomod:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+
+  - package-ecosystem: "npm"
+    directory: "/site/"
+    schedule:
+      interval: "weekly"
+    versioning-strategy: increase
+    groups:
+      npm:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+    cooldown:
+      default-days: 2
+
+  # No gomod entry for /site/. That go.mod holds Hugo modules, which are
+  # updated by hand with `hugo mod get -u`, the way Hugo expects.

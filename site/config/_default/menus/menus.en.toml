@@ -1,0 +1,29 @@
+[[main]]
+  name = "Docs"
+  pageRef = "/docs/"
+  weight = 10
+
+# mod-hanko binds its logout handler to the element with id "logout-link", and
+# the profile modal (content/_modals/profile.md, mounted from mod-hanko) to
+# "#profile-modal".
+[[main]]
+  name = "Account"
+  pre = "fas circle-user"
+  weight = 20
+  [main.params]
+    icon = true
+    control = true
+
+[[main]]
+  name = "Profile"
+  parent = "Account"
+  weight = 10
+  [[main.params]]
+    modal = "#profile-modal"
+
+[[main]]
+  name = "Sign out"
+  parent = "Account"
+  weight = 20
+  [[main.params]]
+    id = "logout-link"

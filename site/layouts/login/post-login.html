@@ -1,0 +1,10 @@
+{{ define "main" -}}
+    {{/* assets/js/critical/return-path.js reads the demo_return_to cookie and
+         redirects on load; this text only shows for the moment before that.
+         The redirect lives in the bundled script rather than an inline one so
+         the page keeps working under a script-src 'self' policy. */}}
+    <noscript><meta http-equiv="refresh" content="0; url=/"></noscript>
+    <div class="container-fluid p-0 d-flex align-items-center justify-content-center" style="min-height: 60vh;">
+        <p class="text-body-secondary pt-5">{{ .Title }}</p>
+    </div>
+{{ end -}}

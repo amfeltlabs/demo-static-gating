@@ -1,0 +1,49 @@
+# Configuration for the demo server. See the README for what each part does.
+
+[auth]
+  # Your Hanko API URL, from the Hanko console. HANKO_API_URL overrides it.
+  # Left empty here so nobody runs against someone else's project by accident.
+  endpoint = ""
+
+  # Where a reader without a valid session is sent.
+  login = "/login/"
+
+  # A valid session is not enough when your Hanko project allows sign-ups:
+  # anyone could create an account. The reader also needs this role, granted
+  # per user below. The server refuses to start without one.
+  require-role = "staff"
+
+  # Paths anyone can load without signing in. A * matches any run of
+  # characters, including slashes, so "/css/*" covers the whole folder and
+  # "/js/*.mjs" every .mjs file below /js/. An entry without * must match
+  # exactly.
+  #
+  # Everything matched here is public. Keep it to what the login page itself
+  # loads, and check what your build writes into these folders.
+  passthrough = [
+    "/login/",
+    "/post-login/",
+    "/favicon.ico",
+    "/css/*",
+    "/fonts/*",
+    "/icons/*",
+    # Not "/img/*": that folder also holds the images your pages use, and
+    # every one of them would be public. The public pages only need these.
+    "/img/favicon*",
+    "/img/logo_icon.svg",
+    # Not "/js/*": the search index is /js/flexsearch-index.en.json and
+    # holds the text of every page. Scripts only.
+    "/js/*.js",
+    "/js/*.mjs",
+    "/webfonts/*",
+  ]
+
+# One entry per person. The subject is the user ID from the Hanko console,
+# never an email address: an address can change hands, an ID cannot. Remove an
+# entry and restart the server to take access away.
+#
+# The entry below is a placeholder that `make dev` uses. No real Hanko user has
+# this ID.
+[[grant]]
+  subject = "00000000-0000-0000-0000-000000000001"
+  roles   = ["staff"]

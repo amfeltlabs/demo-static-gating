@@ -1,0 +1,32 @@
+{
+  "name": "demo-static-gating-site",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Hinode site for the demo-static-gating proof of concept.",
+  "browserslist": [
+    ">= 0.5%",
+    "last 2 major versions",
+    "not dead",
+    "Chrome >= 60",
+    "Firefox >= 60",
+    "Firefox ESR",
+    "iOS >= 12",
+    "Safari >= 12",
+    "not Explorer <= 11",
+    "not kaios <= 2.5"
+  ],
+  "scripts": {
+    "start": "hugo server --bind=0.0.0.0 --disableFastRender --printI18nWarnings",
+    "build": "hugo --gc --minify",
+    "mod:update": "hugo mod get -u ./... && hugo mod tidy",
+    "check:imports": "node scripts/check-hinode-imports.mjs"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@fullhuman/postcss-purgecss": "^8.0.0",
+    "autoprefixer": "^10.6.1",
+    "cssnano": "^9.8.0",
+    "hugo-extended": "^0.167.0",
+    "postcss-cli": "^12.0.0"
+  }
+}

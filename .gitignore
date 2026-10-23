@@ -1,0 +1,7 @@
+# Build output
+/bin/
+/server/dist/*
+!/server/dist/placeholder.txt
+
+.DS_Store
+.env

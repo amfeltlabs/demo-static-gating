@@ -1,0 +1,65 @@
+[main]
+    separator = "-"
+    description = "A Hugo site embedded in a Go binary, gated by Hanko sign-in and a per-user role."
+    enableLanguageSelectionStorage = false
+    canonifyAssetsURLs = false
+    endorse = true
+    footerBelowFold = false
+    loading = "lazy"
+    breakpoint = "md"
+    [main.colorMode]
+        enabled = true
+        modes = ["light", "dark"]
+        toggle = true
+    [main.internalLinks]
+        validate = true
+        pretty = false
+    [main.externalLinks]
+        cue = false
+        tab = true
+    [main.build]
+        transpiler = "dartsass"
+
+[navigation]
+    anchor = true
+    color = "body"
+    fixed = true
+    offset = "5.5rem"
+    breadcrumb = true
+    toc = true
+    sidebar = true
+    size = "md"
+    # The search index is written to /js/flexsearch-index.en.json. /js/ has to
+    # be partly public so the login page can load its scripts, so the server
+    # only lets *.js and *.mjs through there and the index stays gated. See
+    # "The passthrough list is public" in the README.
+    [navigation.search]
+        enabled = true
+
+[messages]
+    placement = "bottom-right"
+
+[sharing]
+    enabled = false
+
+[style]
+    themeFont = "Inter"
+    themeFontPath = "/fonts"
+
+# Fetch the index on the first search, not on every page load. Eager loading
+# would also fire on the login page, where an anonymous visitor gets redirected
+# and the browser logs a failed JSON parse.
+[modules.flexsearch]
+    lazyLoad = true
+
+[modules.hanko]
+    # Your Hanko API URL, from the Hanko console. The Makefile overrides this
+    # with HANKO_API_URL through HUGO_PARAMS_MODULES_HANKO_ENDPOINT, so you do
+    # not need to edit it here. mod-hanko refuses to build with an empty value,
+    # hence the placeholder, which is also what `make dev` builds with.
+    endpoint = "https://hanko.invalid"
+    # /post-login/ sends the reader back to the page they asked for. See
+    # assets/js/critical/return-path.js.
+    login-redirect = "/post-login/"
+    logout-redirect = "/login/"
+    timeout-redirect = "/login/"
